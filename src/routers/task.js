@@ -54,14 +54,22 @@ router.patch('/tasks/:id', async (req, res) => {
     }
 
     try {
-        const task = await Task.findByIdAndUpdate(_id, req.body, {
-            new: true,
-            runValidators: true,
-        });
-        // If no task send 404
+        // find task
+        const task = await Task.findById(_id);
+
+        // check if task exists
         if (!task) {
             return res.status(404).send();
         }
+
+        // update task
+        updates.forEach((update) => {
+            task[update] = req.body[update];
+        });
+
+        // save update
+        await task.save();
+
         res.send(task);
     } catch (error) {
         res.status(400).send(error);

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-// Creating new tasks
-const Task = mongoose.model('Task', {
+// Tasks scheema
+const taskSchema = new mongoose.Schema({
     description: {
         type: String,
         trim: true,
@@ -12,5 +12,8 @@ const Task = mongoose.model('Task', {
         default: false,
     },
 });
+
+// Creating new tasks
+const Task = mongoose.model('Task', taskSchema);
 
 module.exports = Task;
