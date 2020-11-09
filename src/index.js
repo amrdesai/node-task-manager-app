@@ -1,5 +1,8 @@
+// Import packages
 const express = require('express');
 require('./db/mongoose');
+
+// Import modules
 const userRouter = require('./routers/user');
 const taskRouter = require('./routers/task');
 
