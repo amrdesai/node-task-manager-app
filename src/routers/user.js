@@ -12,7 +12,7 @@ router.get('/users', async (req, res) => {
     }
 });
 
-// // Create user
+// Create user - Signup
 router.post('/users', async (req, res) => {
     const user = new User(req.body);
 
@@ -21,6 +21,19 @@ router.post('/users', async (req, res) => {
         res.status(201).send(user);
     } catch (error) {
         res.status(400).send(error);
+    }
+});
+
+// User Login
+router.post('/users/login', async (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    try {
+        const user = await User.findByCredentials(email, password);
+        res.send(user);
+    } catch (error) {
+        res.status(400).send();
     }
 });
 
