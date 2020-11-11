@@ -49,7 +49,7 @@ router.post('/users/logout', auth, async (req, res) => {
 // User Logout All Sessions
 router.post('/users/logoutall', auth, async (req, res) => {
     try {
-        // Remove current token from the list of tokens
+        // Remove all token from the list of tokens
         req.user.tokens = [];
         await req.user.save();
 
