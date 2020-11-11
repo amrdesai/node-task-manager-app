@@ -53,6 +53,17 @@ const userSchema = new mongoose.Schema({
     ],
 });
 
+// Public profile function
+userSchema.methods.toJSON = function () {
+    const user = this;
+    const userObject = user.toObject();
+
+    delete userObject.password;
+    delete userObject.tokens;
+
+    return userObject;
+};
+
 // Auth Token
 userSchema.methods.generateAuthToken = async function () {
     const user = this;
