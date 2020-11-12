@@ -109,7 +109,7 @@ const upload = multer({
         fileSize: 1048576,
     },
     fileFilter(req, file, cb) {
-        if (file.originalname.match(/\.(png|jpg|jpeg)$/gm)) {
+        if (!file.originalname.match(/\.(png|jpg|jpeg)$/gm)) {
             return cb(new Error('File must be JPG, JPEG or PNG format'));
         }
 
@@ -117,9 +117,18 @@ const upload = multer({
     },
 });
 // Uplaod user's avatar endpoint
-router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
-    res.send();
-});
+router.post(
+    '/users/me/avatar',
+    upload.single('avatar'),
+    (req, res) => {
+        res.send();
+    },
+    (error, req, res, next) => {
+        res.status(400).send({
+            error: error.message,
+        });
+    }
+);
 
 // Export user routes
 module.exports = router;
