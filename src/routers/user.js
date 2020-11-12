@@ -104,7 +104,6 @@ router.delete('/users/me', auth, async (req, res) => {
 
 // Avatar directory
 const upload = multer({
-    dest: 'avatars',
     limits: {
         fileSize: 1048576,
     },
@@ -119,16 +118,30 @@ const upload = multer({
 // Uplaod user's avatar endpoint
 router.post(
     '/users/me/avatar',
+    auth,
     upload.single('avatar'),
-    (req, res) => {
+    async (req, res) => {
+        req.user.avatar = req.file.buffer;
+        await req.user.save();
         res.send();
     },
+    // error handeling
     (error, req, res, next) => {
         res.status(400).send({
             error: error.message,
         });
     }
 );
+
+// Delete Avatar
+router.delete('/users/me/avatar', auth, async (req, res) => {
+    if (!req.user.avatar) {
+        return res.status(400).send();
+    }
+    req.user.avatar = undefined;
+    await req.user.save();
+    res.send();
+});
 
 // Export user routes
 module.exports = router;
