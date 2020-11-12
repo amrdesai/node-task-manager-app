@@ -1,5 +1,9 @@
+// Import library
 const express = require('express');
+const multer = require('multer');
 const router = new express.Router();
+
+// Import modules
 const User = require('../models/user');
 const auth = require('../middleware/auth');
 
@@ -96,6 +100,15 @@ router.delete('/users/me', auth, async (req, res) => {
     } catch (error) {
         res.status(500).send();
     }
+});
+
+// Avatar directory
+const upload = multer({
+    dest: 'avatars',
+});
+// Uplaod user's avatar
+router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
+    res.send();
 });
 
 // Export user routes
