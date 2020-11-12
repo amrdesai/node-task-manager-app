@@ -1,7 +1,10 @@
+// Import Packages
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+// Import Modules
 const Task = require('./task');
 
 const userSchema = new mongoose.Schema(
@@ -76,6 +79,7 @@ userSchema.methods.toJSON = function () {
 
     delete userObject.password;
     delete userObject.tokens;
+    delete userObject.avatar;
 
     return userObject;
 };
