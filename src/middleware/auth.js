@@ -7,7 +7,7 @@ const User = require('../models/user');
 const auth = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '');
-        const decoded = jwt.verify(token, 'thisisthesecretcode');
+        const decoded = jwt.verify(token, process.env.MONGODB_URL);
         const user = await User.findOne({
             _id: decoded._id,
             'tokens.token': token,
