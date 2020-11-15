@@ -1,4 +1,4 @@
 # node-task-manager-app
 
-[View Page](https://minm333-node-task-manager.herokuapp.com/ )
+[View Page](https://minm333-node-task-manager-app.herokuapp.com/)
 
