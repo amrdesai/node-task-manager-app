@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(userRouter);
 app.use(taskRouter);
 
+// Home route
 app.get('/', (req, res) => {
     res.send('Welcome to Task Manager App');
 });
