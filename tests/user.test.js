@@ -103,3 +103,16 @@ test('Should delete account', async () => {
 test('Should delete account', async () => {
     await request(app).delete('/users/me').send().expect(401);
 });
+
+// Test: Avatar
+test('Should upload avatar image', async () => {
+    await request(app)
+        .post('/users/me/avatar')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .attach('avatar', 'tests/fixtures/profile-pic.jpg')
+        .expect(200);
+
+    const user = await User.findById(userOneId);
+    // Check if the avater property is equal to buffer
+    expect(user.avatar).toEqual(expect.any(Buffer));
+});
