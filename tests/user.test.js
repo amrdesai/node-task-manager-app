@@ -116,3 +116,24 @@ test('Should upload avatar image', async () => {
     // Check if the avater property is equal to buffer
     expect(user.avatar).toEqual(expect.any(Buffer));
 });
+
+// Test: Update valid fields
+test('Should update valid user fields', async () => {
+    await request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({ name: 'Billi' })
+        .expect(200);
+
+    const user = await User.findById(userOneId);
+    expect(user.name).toBe('Billi');
+});
+
+// Test: Should not update invalid fields
+test('Should not update invalid user fields', async () => {
+    await request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({ location: 'Toronto' })
+        .expect(400);
+});
